@@ -7,21 +7,9 @@ public class Predator : Animal
     {
     }
 
-    protected override int Vision => 12;
+    protected override AnimalTraits Traits => SpeciesProfiles.Predator;
 
-    protected override int MoveCost => 3;
-
-    protected override int BiteGain => 28;
-
-    protected override int ReproduceThreshold => 80;
-
-    protected override int InitialEnergy => 40;
-
-    protected override char SelfGlyph => 'W';
-
-    public override System.ConsoleColor? Color => System.ConsoleColor.Red;
-
-    protected override Organism? FindPrey() => World.FindNearest<Herbivore>(Pos, Vision);
+    protected override Organism? FindPrey() => World.FindNearest<Herbivore>(Pos, Traits.Vision);
 
     protected override Animal MakeChild(Point2 p) => new Predator(World, p);
 }

@@ -11,25 +11,13 @@ public abstract class Animal : Organism
     {
     }
 
-    protected abstract int Vision { get; }
+    protected abstract AnimalTraits Traits { get; }
 
-    protected abstract int MoveCost { get; }
+    public override char Glyph => Traits.Glyph;
 
-    protected abstract int BiteGain { get; }
-
-    protected abstract int ReproduceThreshold { get; }
-
-    protected abstract int InitialEnergy { get; }
-
-    protected abstract char SelfGlyph { get; }
-
-    public override char Glyph => SelfGlyph;
-
-    public override ConsoleColor? Color => ConsoleColor.White;
+    public override ConsoleColor? Color => Traits.Color;
 
     public int Energy { get; set; }
-
-    public int MaxAge { get; set; } = 1000;
 
     public override void Tick()
     {
@@ -37,7 +25,7 @@ public abstract class Animal : Organism
 
         if (Age == 1 && Energy == 0)
         {
-            Energy = InitialEnergy;
+            Energy = Traits.InitialEnergy;
         }
 
         var prey = FindPrey();
@@ -47,7 +35,7 @@ public abstract class Animal : Organism
             if (AreNeighborsOrSame(Pos, prey.Pos) && prey.IsAlive)
             {
                 World.Remove(prey);
-                Energy += BiteGain;
+                Energy += Traits.BiteGain;
             }
         }
         else
@@ -55,9 +43,9 @@ public abstract class Animal : Organism
             Wander();
         }
 
-        Energy -= MoveCost;
+        Energy -= Traits.MoveCost;
 
-        if (Energy >= ReproduceThreshold)
+        if (Energy >= Traits.ReproduceThreshold)
         {
             var empty = World.EmptyNeighbors8(Pos).ToList();
             if (empty.Count > 0)
@@ -68,7 +56,7 @@ public abstract class Animal : Organism
             }
         }
 
-        if (Energy <= 0 || (Age > MaxAge && Rand.Chance(MortalityRates.AnimalOldAgeDeathChance)))
+        if (Energy <= 0 || (Age > Traits.MaxAge && Rand.Chance(MortalityRates.AnimalOldAgeDeathChance)))
         {
             World.Remove(this);
         }

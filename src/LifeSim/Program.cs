@@ -11,19 +11,14 @@ public static class Program
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         Console.CursorVisible = false;
 
-        const int width = 50;
-        const int height = 22;
-        var initialPlants = (int)(width * height * 0.22);
-        const int initialHerbivores = 28;
-        const int initialPredators = 10;
+        var initialPlants = (int)(SimulationSettings.WorldWidth * SimulationSettings.WorldHeight * SimulationSettings.InitialPlantDensity);
 
-        var world = new World(width, height);
+        var world = new World(SimulationSettings.WorldWidth, SimulationSettings.WorldHeight);
         world.Seed<Plant>(initialPlants);
-        world.Seed<Herbivore>(initialHerbivores);
-        world.Seed<Predator>(initialPredators);
+        world.Seed<Herbivore>(SimulationSettings.InitialHerbivores);
+        world.Seed<Predator>(SimulationSettings.InitialPredators);
 
         var paused = false;
-        const int delayMs = 120;
 
         while (true)
         {
@@ -49,7 +44,7 @@ public static class Program
                 RenderWorld(world);
             }
 
-            Thread.Sleep(delayMs);
+            Thread.Sleep(SimulationSettings.TickDelayMs);
         }
     }
 

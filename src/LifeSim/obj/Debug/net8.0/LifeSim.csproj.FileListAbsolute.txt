@@ -1,0 +1,28 @@
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/obj/Debug/net8.0/LifeSim.GeneratedMSBuildEditorConfig.editorconfig
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/obj/Debug/net8.0/LifeSim.AssemblyInfoInputs.cache
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/obj/Debug/net8.0/LifeSim.AssemblyInfo.cs
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/obj/Debug/net8.0/LifeSim.csproj.CoreCompileInputs.cache
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/bin/Debug/net8.0/LifeSim
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/bin/Debug/net8.0/LifeSim.deps.json
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/bin/Debug/net8.0/LifeSim.runtimeconfig.json
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/bin/Debug/net8.0/LifeSim.dll
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/bin/Debug/net8.0/LifeSim.pdb
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/obj/Debug/net8.0/LifeSim.dll
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/obj/Debug/net8.0/refint/LifeSim.dll
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/obj/Debug/net8.0/LifeSim.pdb
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/obj/Debug/net8.0/LifeSim.genruntimeconfig.cache
+/Users/lidia/Work/ИПМКН/Task3/src/LifeSim/obj/Debug/net8.0/ref/LifeSim.dll
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\bin\Debug\net8.0\LifeSim.exe
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\bin\Debug\net8.0\LifeSim.deps.json
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\bin\Debug\net8.0\LifeSim.runtimeconfig.json
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\bin\Debug\net8.0\LifeSim.dll
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\bin\Debug\net8.0\LifeSim.pdb
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\obj\Debug\net8.0\LifeSim.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\obj\Debug\net8.0\LifeSim.AssemblyInfoInputs.cache
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\obj\Debug\net8.0\LifeSim.AssemblyInfo.cs
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\obj\Debug\net8.0\LifeSim.csproj.CoreCompileInputs.cache
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\obj\Debug\net8.0\LifeSim.dll
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\obj\Debug\net8.0\refint\LifeSim.dll
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\obj\Debug\net8.0\LifeSim.pdb
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\obj\Debug\net8.0\LifeSim.genruntimeconfig.cache
+C:\Users\danil\OneDrive\Рабочий стол\code\с#\Task3\src\LifeSim\obj\Debug\net8.0\ref\LifeSim.dll

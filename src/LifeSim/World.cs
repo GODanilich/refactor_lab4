@@ -23,6 +23,12 @@ public class World
 
     public IEnumerable<Organism> All => _organisms.Where(o => o.IsAlive);
 
+    public PopulationStats GetPopulationStats() => new(
+       Plants: All.OfType<Plant>().Count(),
+       Herbivores: All.OfType<Herbivore>().Count(),
+       Predators: All.OfType<Predator>().Count());
+
+
     public void Add(Organism org)
     {
         if (_grid.ContainsKey(org.Pos))

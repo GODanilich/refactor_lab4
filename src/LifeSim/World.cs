@@ -112,26 +112,47 @@ public class World
         }
     }
 
+    public void SeedPlants(int count) => SeedCore(count, pos => new Plant(this, pos));
+
+    public void SeedHerbivores(int count) => SeedCore(count, pos => new Herbivore(this, pos));
+
+    public void SeedPredators(int count) => SeedCore(count, pos => new Predator(this, pos));
+
     public void Seed<T>(int count)
         where T : Organism
     {
+        if (typeof(T) == typeof(Plant))
+        {
+            SeedPlants(count);
+            return;
+        }
+
+        if (typeof(T) == typeof(Herbivore))
+        {
+            SeedHerbivores(count);
+            return;
+        }
+
+        if (typeof(T) == typeof(Predator))
+        {
+            SeedPredators(count);
+            return;
+        }
+
+        throw new NotSupportedException($"Unknown organism type: {typeof(T).Name}");
+    }
+
+    private void SeedCore(int count, Func<Point2, Organism> createOrganism)
+    {
         for (var i = 0; i < count; i++)
         {
-            var p = RandomEmptyCell();
-            if (p == null)
+            var emptyCell = RandomEmptyCell();
+            if (emptyCell == null)
             {
                 break;
             }
 
-            Organism organism = typeof(T).Name switch
-            {
-                nameof(Plant) => new Plant(this, p.Value),
-                nameof(Herbivore) => new Herbivore(this, p.Value),
-                nameof(Predator) => new Predator(this, p.Value),
-                _ => throw new NotSupportedException($"Unknown organism type: {typeof(T).Name}"),
-            };
-
-            Add(organism);
+            Add(createOrganism(emptyCell.Value));
         }
     }
 

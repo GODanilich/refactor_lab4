@@ -14,9 +14,10 @@ public static class Program
         var initialPlants = (int)(SimulationSettings.WorldWidth * SimulationSettings.WorldHeight * SimulationSettings.InitialPlantDensity);
 
         var world = new World(SimulationSettings.WorldWidth, SimulationSettings.WorldHeight);
-        world.Seed<Plant>(initialPlants);
-        world.Seed<Herbivore>(SimulationSettings.InitialHerbivores);
-        world.Seed<Predator>(SimulationSettings.InitialPredators);
+        world.SeedPlants(initialPlants);
+        world.SeedHerbivores(SimulationSettings.InitialHerbivores);
+        world.SeedPredators(SimulationSettings.InitialPredators);
+
 
         var paused = false;
 

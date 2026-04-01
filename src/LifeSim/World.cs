@@ -71,12 +71,7 @@ public class World
 
     public bool IsEmpty(Point2 p) => !_grid.ContainsKey(Wrap(p));
 
-    public Point2 Wrap(Point2 p)
-    {
-        var x = ((p.X % Width) + Width) % Width;
-        var y = ((p.Y % Height) + Height) % Height;
-        return new Point2(x, y);
-    }
+    public Point2 Wrap(Point2 p) => p.Wrap(Width, Height);
 
     public void Step()
     {
@@ -101,7 +96,7 @@ public class World
             {
                 if (dx != 0 || dy != 0)
                 {
-                    yield return Wrap(new Point2(p.X + dx, p.Y + dy));
+                    yield return Wrap(p.Offset(dx, dy));
                 }
             }
         }
@@ -199,9 +194,7 @@ public class World
         {
             if (o is T)
             {
-                var dx = ToroidalDistance(from.X, o.Pos.X, Width);
-                var dy = ToroidalDistance(from.Y, o.Pos.Y, Height);
-                var distance = dx + dy;
+                var distance = from.ToroidalDistanceTo(o.Pos, Width, Height);
                 if (distance <= visionRange && distance < bestDist)
                 {
                     best = o;
@@ -220,10 +213,4 @@ public class World
     }
 
     public IReadOnlyDictionary<Point2, Organism> GridSnapshot() => new Dictionary<Point2, Organism>(_grid);
-
-    private static int ToroidalDistance(int a, int b, int size)
-    {
-        var diff = Math.Abs(a - b);
-        return Math.Min(diff, size - diff);
-    }
 }

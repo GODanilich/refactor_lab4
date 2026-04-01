@@ -66,8 +66,7 @@ public abstract class Animal : Organism
 
     protected abstract Animal MakeChild(Point2 p);
 
-    protected static bool AreNeighborsOrSame(Point2 a, Point2 b) =>
-        Math.Abs(a.X - b.X) <= 1 && Math.Abs(a.Y - b.Y) <= 1;
+    protected static bool AreNeighborsOrSame(Point2 a, Point2 b) => a.IsNeighborOrSame(b);
 
     protected void StepToward(Point2 target)
     {
@@ -77,17 +76,17 @@ public abstract class Animal : Organism
         var candidates = new List<Point2>();
         if (dx != 0)
         {
-            candidates.Add(World.Wrap(new Point2(Pos.X + dx, Pos.Y)));
+            candidates.Add(World.Wrap(Pos.Offset(dx, 0)));
         }
 
         if (dy != 0)
         {
-            candidates.Add(World.Wrap(new Point2(Pos.X, Pos.Y + dy)));
+            candidates.Add(World.Wrap(Pos.Offset(0, dy)));
         }
 
         if (dx != 0 && dy != 0)
         {
-            candidates.Add(World.Wrap(new Point2(Pos.X + dx, Pos.Y + dy)));
+            candidates.Add(World.Wrap(Pos.Offset(dx, dy)));
         }
 
         var free = candidates.Where(World.IsEmpty).ToList();

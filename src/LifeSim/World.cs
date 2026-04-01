@@ -23,6 +23,12 @@ public class World
 
     public IEnumerable<Organism> All => _organisms.Where(o => o.IsAlive);
 
+    public PopulationStats GetPopulationStats() => new(
+       Plants: All.OfType<Plant>().Count(),
+       Herbivores: All.OfType<Herbivore>().Count(),
+       Predators: All.OfType<Predator>().Count());
+
+
     public void Add(Organism org)
     {
         if (_grid.ContainsKey(org.Pos))
@@ -65,12 +71,7 @@ public class World
 
     public bool IsEmpty(Point2 p) => !_grid.ContainsKey(Wrap(p));
 
-    public Point2 Wrap(Point2 p)
-    {
-        var x = ((p.X % Width) + Width) % Width;
-        var y = ((p.Y % Height) + Height) % Height;
-        return new Point2(x, y);
-    }
+    public Point2 Wrap(Point2 p) => p.Wrap(Width, Height);
 
     public void Step()
     {
@@ -95,7 +96,7 @@ public class World
             {
                 if (dx != 0 || dy != 0)
                 {
-                    yield return Wrap(new Point2(p.X + dx, p.Y + dy));
+                    yield return Wrap(p.Offset(dx, dy));
                 }
             }
         }
@@ -112,26 +113,47 @@ public class World
         }
     }
 
+    public void SeedPlants(int count) => SeedCore(count, pos => new Plant(this, pos));
+
+    public void SeedHerbivores(int count) => SeedCore(count, pos => new Herbivore(this, pos));
+
+    public void SeedPredators(int count) => SeedCore(count, pos => new Predator(this, pos));
+
     public void Seed<T>(int count)
         where T : Organism
     {
+        if (typeof(T) == typeof(Plant))
+        {
+            SeedPlants(count);
+            return;
+        }
+
+        if (typeof(T) == typeof(Herbivore))
+        {
+            SeedHerbivores(count);
+            return;
+        }
+
+        if (typeof(T) == typeof(Predator))
+        {
+            SeedPredators(count);
+            return;
+        }
+
+        throw new NotSupportedException($"Unknown organism type: {typeof(T).Name}");
+    }
+
+    private void SeedCore(int count, Func<Point2, Organism> createOrganism)
+    {
         for (var i = 0; i < count; i++)
         {
-            var p = RandomEmptyCell();
-            if (p == null)
+            var emptyCell = RandomEmptyCell();
+            if (emptyCell == null)
             {
                 break;
             }
 
-            Organism organism = typeof(T).Name switch
-            {
-                nameof(Plant) => new Plant(this, p.Value),
-                nameof(Herbivore) => new Herbivore(this, p.Value),
-                nameof(Predator) => new Predator(this, p.Value),
-                _ => throw new NotSupportedException($"Unknown organism type: {typeof(T).Name}"),
-            };
-
-            Add(organism);
+            Add(createOrganism(emptyCell.Value));
         }
     }
 
@@ -172,9 +194,7 @@ public class World
         {
             if (o is T)
             {
-                var dx = ToroidalDistance(from.X, o.Pos.X, Width);
-                var dy = ToroidalDistance(from.Y, o.Pos.Y, Height);
-                var distance = dx + dy;
+                var distance = from.ToroidalDistanceTo(o.Pos, Width, Height);
                 if (distance <= visionRange && distance < bestDist)
                 {
                     best = o;
@@ -193,10 +213,4 @@ public class World
     }
 
     public IReadOnlyDictionary<Point2, Organism> GridSnapshot() => new Dictionary<Point2, Organism>(_grid);
-
-    private static int ToroidalDistance(int a, int b, int size)
-    {
-        var diff = Math.Abs(a - b);
-        return Math.Min(diff, size - diff);
-    }
 }

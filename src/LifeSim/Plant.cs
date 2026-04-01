@@ -30,7 +30,7 @@ public class Plant : Organism
             }
         }
 
-        if (Age > MaxAge && Rand.Chance(0.01))
+        if (Age > MaxAge && Rand.Chance(MortalityRates.PlantOldAgeDeathChance))
         {
             World.Remove(this);
         }

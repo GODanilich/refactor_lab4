@@ -11,19 +11,15 @@ public static class Program
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         Console.CursorVisible = false;
 
-        const int width = 50;
-        const int height = 22;
-        var initialPlants = (int)(width * height * 0.22);
-        const int initialHerbivores = 28;
-        const int initialPredators = 10;
+        var initialPlants = (int)(SimulationSettings.WorldWidth * SimulationSettings.WorldHeight * SimulationSettings.InitialPlantDensity);
 
-        var world = new World(width, height);
-        world.Seed<Plant>(initialPlants);
-        world.Seed<Herbivore>(initialHerbivores);
-        world.Seed<Predator>(initialPredators);
+        var world = new World(SimulationSettings.WorldWidth, SimulationSettings.WorldHeight);
+        world.SeedPlants(initialPlants);
+        world.SeedHerbivores(SimulationSettings.InitialHerbivores);
+        world.SeedPredators(SimulationSettings.InitialPredators);
+
 
         var paused = false;
-        const int delayMs = 120;
 
         while (true)
         {
@@ -49,7 +45,7 @@ public static class Program
                 RenderWorld(world);
             }
 
-            Thread.Sleep(delayMs);
+            Thread.Sleep(SimulationSettings.TickDelayMs);
         }
     }
 
@@ -57,12 +53,10 @@ public static class Program
     {
         Console.SetCursorPosition(0, 0);
 
-        var plants = world.All.OfType<Plant>().Count();
-        var herbs = world.All.OfType<Herbivore>().Count();
-        var preds = world.All.OfType<Predator>().Count();
+        var stats = world.GetPopulationStats();
 
         Console.ResetColor();
-        Console.WriteLine($"Tick: {world.Tick,-8}  Plants: {plants,-5}  Herbivores: {herbs,-5}  Predators: {preds,-5}   [Space/P] pause, [Q/Esc] quit");
+        Console.WriteLine($"Tick: {world.Tick,-8}  Plants: {stats.Plants,-5}  Herbivores: {stats.Herbivores,-5}  Predators: {stats.Predators,-5}   [Space/P] pause, [Q/Esc] quit");
 
         var snapshot = world.GridSnapshot();
         for (var y = 0; y < world.Height; y++)
